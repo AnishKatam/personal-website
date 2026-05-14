@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+const BADGE_RADIUS = "14px";
+
 export default function AwesomeBadge() {
   const [opacity, setOpacity] = useState(1);
 
@@ -20,224 +22,365 @@ export default function AwesomeBadge() {
         opacity,
         transition: "opacity 0.2s ease",
         pointerEvents: opacity > 0.05 ? "auto" : "none",
-        width: "78px",
+        width: "112px",
         transformOrigin: "top center",
         animation: "badgeSway 6s ease-in-out infinite",
       }}
-      aria-label="Most COOL Person — Certified 2026"
-      title="Most COOL Person · Certified 2026"
+      aria-label="Best Dev 2026 — Certified Credential"
+      title="Uhhhhh ... just trust me on this one"
     >
-      {/* Lanyard string */}
-      <div
-        style={{
-          width: "2px",
-          height: "12px",
-          margin: "0 auto",
-          background:
-            "linear-gradient(to bottom, rgba(150,170,255,0) 0%, rgba(150,170,255,0.55) 100%)",
-        }}
-      />
+      <svg
+        viewBox="0 0 80 22"
+        width="80"
+        height="22"
+        style={{ display: "block", margin: "0 auto", overflow: "visible" }}
+      >
+        <defs>
+          <linearGradient id="lanyardCord" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(150,170,255,0)" />
+            <stop offset="100%" stopColor="rgba(160,185,255,0.7)" />
+          </linearGradient>
+        </defs>
+  
+        <path
+          d="M40 0 Q 36 12, 22 20"
+          stroke="url(#lanyardCord)"
+          strokeWidth="1.4"
+          fill="none"
+          strokeLinecap="round"
+        />
+     
+        <path
+          d="M40 0 Q 44 12, 58 20"
+          stroke="url(#lanyardCord)"
+          strokeWidth="1.4"
+          fill="none"
+          strokeLinecap="round"
+        />
+        
+        <circle cx="40" cy="1.5" r="2" fill="#1a1d28" stroke="rgba(180,200,255,0.5)" strokeWidth="0.5" />
+      </svg>
 
-      {/* Metal eyelet ring */}
+      
       <div
         style={{
           position: "relative",
-          width: "13px",
-          height: "13px",
-          borderRadius: "50%",
-          margin: "-1px auto 0",
+          marginTop: "-4px",
+          padding: "2px",
+          borderRadius: BADGE_RADIUS,
           background:
-            "radial-gradient(circle at 32% 28%, #5a6280 0%, #20232e 55%, #0a0c12 100%)",
-          border: "1px solid rgba(160,180,230,0.35)",
-          boxShadow:
-            "inset 0 0 3px rgba(0,0,0,0.85), 0 0 5px rgba(120,150,255,0.18)",
+            "linear-gradient(135deg, rgba(180,200,255,0.45) 0%, rgba(80,90,120,0.15) 30%, rgba(255,255,255,0.05) 50%, rgba(80,90,120,0.15) 70%, rgba(180,200,255,0.4) 100%)",
+          filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.65))",
         }}
       >
-        <div
-          style={{
-            position: "absolute",
-            inset: "3px",
-            borderRadius: "50%",
-            background: "#08090c",
-            border: "1px solid rgba(255,255,255,0.04)",
-          }}
-        />
-      </div>
-
-      {/* Badge body */}
-      <div
-        style={{
-          position: "relative",
-          marginTop: "-1px",
-          padding: "10px 8px 8px",
-          borderRadius: "9px",
-          background:
-            "linear-gradient(180deg, #15151a 0%, #0b0b0e 50%, #0e0e12 100%)",
-          border: "1px solid rgba(255,255,255,0.07)",
-          boxShadow:
-            "0 0 0 1px rgba(0,0,0,0.55), 0 8px 22px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05), inset 0 0 18px rgba(100,140,255,0.06)",
-          overflow: "hidden",
-        }}
-      >
-        {/* corner blue glow accent */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background:
-              "radial-gradient(ellipse at 50% -10%, rgba(110,150,255,0.16), transparent 65%)",
-            pointerEvents: "none",
-          }}
-        />
-
-        {/* corner rivets */}
-        {[
-          { top: 4, left: 4 },
-          { top: 4, right: 4 },
-          { bottom: 4, left: 4 },
-          { bottom: 4, right: 4 },
-        ].map((p, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              width: "3px",
-              height: "3px",
-              borderRadius: "50%",
-              background:
-                "radial-gradient(circle at 30% 30%, #6a7290, #1a1d28 80%)",
-              boxShadow: "inset 0 0 1px rgba(0,0,0,0.8)",
-              ...p,
-            }}
-          />
-        ))}
-
-        {/* Star insignia */}
+      
         <div
           style={{
             position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "6px",
-            marginTop: "1px",
+            borderRadius: "12px",
+            background:
+              "linear-gradient(180deg, #15171f 0%, #0a0b10 45%, #0d0e14 100%)",
+            padding: "12px 8px 9px",
+            overflow: "hidden",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 0 22px rgba(80,120,220,0.08)",
           }}
         >
+
           <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
+            viewBox="0 0 100 140"
+            preserveAspectRatio="none"
             style={{
-              filter:
-                "drop-shadow(0 0 5px rgba(120,160,255,0.6)) drop-shadow(0 0 1px rgba(255,255,255,0.4))",
-              animation: "badgeStarPulse 3.5s ease-in-out infinite",
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              opacity: 0.18,
+              pointerEvents: "none",
             }}
           >
-            <defs>
-              <linearGradient id="awesomeStar" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#f0f4ff" />
-                <stop offset="55%" stopColor="#aabbff" />
-                <stop offset="100%" stopColor="#5a6cff" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M12 2.4l2.7 6.3 6.8.6-5.2 4.5 1.6 6.7L12 17l-5.9 3.5 1.6-6.7L2.5 9.3l6.8-.6z"
-              fill="url(#awesomeStar)"
-              stroke="rgba(255,255,255,0.35)"
-              strokeWidth="0.5"
-              strokeLinejoin="round"
-            />
+            <g stroke="rgba(140,170,255,0.7)" strokeWidth="0.4" fill="none">
+              <path d="M0 20 L 30 20 L 35 25 L 70 25 L 75 20 L 100 20" />
+              <path d="M0 60 L 20 60 L 25 55 L 60 55 L 65 60 L 100 60" />
+              <path d="M0 100 L 40 100 L 45 105 L 80 105 L 85 100 L 100 100" />
+              <path d="M20 0 L 20 12 L 25 17 L 25 35" />
+              <path d="M80 140 L 80 128 L 75 123 L 75 110" />
+              <path d="M50 30 L 50 50" />
+              <path d="M50 80 L 50 100" />
+            </g>
+            <g fill="rgba(140,170,255,0.85)">
+              <circle cx="35" cy="25" r="0.9" />
+              <circle cx="70" cy="25" r="0.9" />
+              <circle cx="25" cy="55" r="0.9" />
+              <circle cx="65" cy="55" r="0.9" />
+              <circle cx="45" cy="105" r="0.9" />
+              <circle cx="80" cy="105" r="0.9" />
+              <circle cx="50" cy="50" r="1.2" />
+              <circle cx="50" cy="80" r="1.2" />
+            </g>
           </svg>
-        </div>
 
-        {/* Top divider */}
-        <div
-          style={{
-            height: "1px",
-            margin: "0 4px 7px",
-            background:
-              "linear-gradient(to right, transparent, rgba(160,180,255,0.4), transparent)",
-          }}
-        />
-
-        {/* Stacked title */}
-        <div
-          style={{
-            fontFamily: "var(--font-orbitron), sans-serif",
-            textAlign: "center",
-            lineHeight: 1.05,
-            letterSpacing: "0.18em",
-          }}
-        >
+        
           <div
             style={{
-              fontSize: "10px",
-              fontWeight: 700,
-              color: "rgba(190,205,255,0.85)",
-            }}
-          >
-            MOST
-          </div>
-          <div
-            style={{
-              fontSize: "11px",
-              fontWeight: 900,
-              padding: "2px 0",
+              position: "absolute",
+              inset: 0,
               background:
-                "linear-gradient(135deg, #ffffff 0%, #aabbff 50%, #6677ff 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+                "radial-gradient(ellipse at 50% -10%, rgba(110,150,255,0.22), transparent 60%)",
+              pointerEvents: "none",
             }}
-          >
-            COOL
-          </div>
+          />
+             
           <div
             style={{
-              fontSize: "10px",
-              fontWeight: 700,
-              color: "rgba(190,205,255,0.85)",
+              position: "absolute",
+              left: "4%",
+              right: "4%",
+              top: 0,
+              height: "8px",
+              background:
+                "linear-gradient(180deg, transparent, rgba(140,180,255,0.45), transparent)",
+              filter: "blur(1px)",
+              pointerEvents: "none",
+              animation: "badgeScanline 5s linear infinite",
+            }}
+          />
+
+  
+          {[
+            { top: 6, left: 6, borderTop: 1, borderLeft: 1 },
+            { top: 6, right: 6, borderTop: 1, borderRight: 1 },
+            { bottom: 6, left: 6, borderBottom: 1, borderLeft: 1 },
+            { bottom: 6, right: 6, borderBottom: 1, borderRight: 1 },
+          ].map((p, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                width: "8px",
+                height: "8px",
+                borderColor: "rgba(170,195,255,0.6)",
+                borderStyle: "solid",
+                borderWidth: 0,
+                ...p,
+              }}
+            />
+          ))}
+
+    
+          <div
+            style={{
+              position: "relative",
+              textAlign: "center",
+              fontSize: "20px",
+              lineHeight: 1,
+              marginBottom: "6px",
+              pointerEvents: "none",
+              color: "rgba(200,215,255,0.9)",
+              textShadow: "0 0 8px rgba(140,180,255,0.6)",
+              zIndex: 2,
             }}
           >
-            PERSON
+            ♘ ♞
           </div>
-        </div>
 
-        {/* Bottom divider */}
-        <div
-          style={{
-            height: "1px",
-            margin: "7px 4px 5px",
-            background:
-              "linear-gradient(to right, transparent, rgba(160,180,255,0.22), transparent)",
-          }}
-        />
+         
+          <div
+            style={{
+              position: "relative",
+              width: "44px",
+              height: "44px",
+              margin: "0 auto 6px",
+              animation: "badgeChipGlow 3.5s ease-in-out infinite",
+            }}
+          >
+            {/* Slow-rotating outer ring */}
+            <svg
+              viewBox="0 0 60 60"
+              width="44"
+              height="44"
+              style={{
+                position: "absolute",
+                inset: 0,
+                animation: "badgeChipSpin 18s linear infinite",
+              }}
+            >
+              <defs>
+                <linearGradient id="chipRing" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#dfe7ff" />
+                  <stop offset="50%" stopColor="#6f82ff" />
+                  <stop offset="100%" stopColor="#2a2f55" />
+                </linearGradient>
+              </defs>
+              <circle
+                cx="30"
+                cy="30"
+                r="26"
+                fill="none"
+                stroke="url(#chipRing)"
+                strokeWidth="1"
+                strokeDasharray="3 3"
+              />
+           
+              {[0, 45, 90, 135, 180, 225, 270, 315].map((deg) => (
+                <line
+                  key={deg}
+                  x1="30"
+                  y1="2"
+                  x2="30"
+                  y2="6"
+                  stroke="rgba(180,200,255,0.85)"
+                  strokeWidth="0.8"
+                  transform={`rotate(${deg} 30 30)`}
+                />
+              ))}
+            </svg>
 
-        {/* Certified line */}
-        <div
-          style={{
-            fontFamily: "var(--font-orbitron), sans-serif",
-            fontSize: "6.5px",
-            fontWeight: 700,
-            letterSpacing: "0.28em",
-            textAlign: "center",
-            color: "rgba(170,190,255,0.65)",
-          }}
-        >
-          CERTIFIED · 2026
-        </div>
+          
+            <svg
+              viewBox="0 0 60 60"
+              width="44"
+              height="44"
+              style={{ position: "absolute", inset: 0 }}
+            >
+              <defs>
+                <linearGradient id="hexFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1b1f2c" />
+                  <stop offset="100%" stopColor="#070810" />
+                </linearGradient>
+                <linearGradient id="hexStroke" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="50%" stopColor="#a8b8ff" />
+                  <stop offset="100%" stopColor="#5867ff" />
+                </linearGradient>
+                <linearGradient id="codeGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="100%" stopColor="#8aa0ff" />
+                </linearGradient>
+              </defs>
+            
+              <polygon
+                points="30,12 46,21 46,39 30,48 14,39 14,21"
+                fill="url(#hexFill)"
+                stroke="url(#hexStroke)"
+                strokeWidth="1.2"
+              />
+            
+              <g
+                fill="none"
+                stroke="url(#codeGrad)"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <polyline points="20,30 25,35" />
+                <polyline points=" 40,30 35,35" />
+              </g>
+            </svg>
+          </div>
 
-        {/* Serial number */}
-        <div
-          style={{
-            fontFamily: "var(--font-mono), ui-monospace, monospace",
-            fontSize: "6px",
-            letterSpacing: "0.22em",
-            textAlign: "center",
-            color: "rgba(130,150,200,0.45)",
-            marginTop: "2px",
-          }}
-        >
-          NO. 001/∞
+         
+          <div
+            style={{
+              fontFamily: "var(--font-orbitron), sans-serif",
+              textAlign: "center",
+              lineHeight: 1,
+              position: "relative",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "13px",
+                fontWeight: 900,
+                letterSpacing: "0.18em",
+                background:
+                  "linear-gradient(135deg, #ffffff 0%, #c5d2ff 45%, #6677ff 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                textShadow: "0 0 12px rgba(120,160,255,0.25)",
+              }}
+            >
+              BEST
+            </div>
+            <div
+              style={{
+                fontSize: "13px",
+                fontWeight: 900,
+                letterSpacing: "0.22em",
+                marginTop: "1px",
+                background:
+                  "linear-gradient(135deg, #ffffff 0%, #c5d2ff 45%, #6677ff 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              DEV
+            </div>
+          </div>
+
+        
+          <div
+            style={{
+              marginTop: "6px",
+              padding: "2px 0",
+              borderTop: "1px solid rgba(160,185,255,0.15)",
+              borderBottom: "1px solid rgba(160,185,255,0.15)",
+              background:
+                "linear-gradient(90deg, rgba(80,110,200,0) 0%, rgba(80,110,200,0.18) 50%, rgba(80,110,200,0) 100%)",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "var(--font-orbitron), sans-serif",
+                fontSize: "16px",
+                fontWeight: 800,
+                letterSpacing: "0.32em",
+                textAlign: "center",
+                paddingLeft: "0.32em",
+                color: "#e6ecff",
+                textShadow:
+                  "0 0 8px rgba(140,180,255,0.55), 0 0 1px rgba(255,255,255,0.6)",
+              }}
+            >
+              2026
+            </div>
+          </div>
+
+       
+          <div
+            style={{
+              marginTop: "7px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              fontFamily: "var(--font-mono), ui-monospace, monospace",
+              fontSize: "5.5px",
+              letterSpacing: "0.14em",
+              color: "rgba(170,195,255,0.7)",
+              padding: "0 2px",
+            }}
+          >
+            <span style={{ display: "flex", alignItems: "center", gap: "3px", background: "rgba(233, 44, 44, 0.1)", padding: "1px 3px", borderRadius: "4px" }}>
+              <span
+                style={{
+                  width: "4px",
+                  height: "4px",
+                  borderRadius: "50%",
+                  background: "#c94641",
+                  animation: "badgeLed 1.6s ease-in-out infinite",
+                }}
+              />
+              LIVE
+            </span>
+            <span style={{ animation: "badgeTickerPulse 2.4s ease-in-out infinite" }}>
+              ID·001
+            </span>
+          </div>
+
+         
+        
         </div>
       </div>
     </div>
