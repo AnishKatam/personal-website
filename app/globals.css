@@ -67,3 +67,13 @@ body {
   0%, 100% { opacity: 0.55; }
   50%      { opacity: 0.95; }
 }
+
+@keyframes sparklePulse {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+  50%      { transform: scale(1.25) rotate(35deg); opacity: 1; }
+}
+
+@keyframes vizLed {
+  0%, 100% { opacity: 1;   box-shadow: 0 0 6px rgba(103,232,249,0.8), 0 0 10px rgba(34,211,238,0.5); }
+  50%      { opacity: 0.4; box-shadow: 0 0 3px rgba(103,232,249,0.4); }
+}

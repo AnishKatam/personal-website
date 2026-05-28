@@ -1,9 +1,10 @@
 import Image from "next/image";
 import profilePic from "../assets/322914.jpeg";
+import pfpBackground from "../assets/pfpbackground1.png";
 import freakyCat from "../assets/freaky-cat-freaky-ezgif.com-resize.gif";
 import ShootingStars from "./components/ShootingStars";
 import ParticleNetwork from "./components/ParticleNetwork";
-import Constellation from "./components/Constellation";
+import ParticleStrings from "./components/ParticleStrings";
 import ScrollHint from "./components/ScrollHint";
 import AwesomeBadge from "./components/AwesomeBadge";
 
@@ -11,42 +12,67 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white">
       <ShootingStars />
-      <ParticleNetwork />
+      <ParticleStrings />
       <AwesomeBadge />
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-24 overflow-hidden">
+      <section className="relative z-10 min-h-screen flex items-center justify-center px-6 py-24">
 
-       
-
-        <div className="flex flex-col md:flex-row items-center gap-14 max-w-5xl w-full">
-
+        {/* Centered profile */}
+        <div className="flex flex-col md:flex-row items-center gap-10 max-w-3xl w-full">
           {/* Profile photo */}
-          <div className="relative shrink-0">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 blur-xl opacity-40 scale-110" />
+          <div className="relative shrink-0 w-44 h-44">
             <div
-              className="relative w-52 h-52 rounded-full overflow-hidden border-2 border-white/10"
-              style={{ boxShadow: "0 0 40px 8px rgba(100,120,255,0.35), 0 0 0 1px rgba(150,170,255,0.15)" }}
+              className="absolute inset-0 scale-[1.7] pointer-events-none"
+              style={{
+                maskImage: "radial-gradient(circle, black 28%, transparent 72%)",
+                WebkitMaskImage: "radial-gradient(circle, black 28%, transparent 72%)",
+              }}
+            >
+              <Image
+                src={pfpBackground}
+                alt=""
+                aria-hidden
+                fill
+                className="object-cover opacity-90"
+                priority
+              />
+            </div>
+            <div
+              className="relative w-44 h-44 rounded-full overflow-hidden border-2 border-white/10"
+              style={{
+                boxShadow:
+                  "0 0 40px 8px rgba(200,200,210,0.18), 0 0 0 1px rgba(220,220,230,0.10)",
+              }}
             >
               <Image src={profilePic} alt="Anish Katam" fill className="object-cover" priority />
             </div>
             <div
-              className="absolute w-3 h-3 rounded-full bg-blue-400 shadow-[0_0_8px_2px_rgba(100,150,255,0.8)]"
-              style={{ top: "50%", left: "50%", marginTop: "-6px", marginLeft: "-6px", animation: "orbit 6s linear infinite" }}
+              className="absolute w-2.5 h-2.5 rounded-full bg-white/90 shadow-[0_0_8px_2px_rgba(220,220,230,0.7)]"
+              style={{
+                top: "50%",
+                left: "50%",
+                marginTop: "-5px",
+                marginLeft: "-5px",
+                animation: "orbit 6s linear infinite",
+              }}
             />
           </div>
 
           {/* Name + intro */}
           <div className="flex flex-col gap-4 text-center md:text-left">
             <div>
-              <p className="text-xs tracking-[0.35em] text-blue-400 uppercase mb-2" style={{ fontFamily: "var(--font-orbitron)" }}>
+              <p
+                className="text-xs tracking-[0.35em] uppercase mb-2"
+                style={{ fontFamily: "var(--font-orbitron)", color: "#B0B7C6" }}
+              >
                 Software Engineer
               </p>
               <h1
                 className="text-5xl sm:text-6xl font-black leading-none tracking-wider uppercase"
                 style={{
                   fontFamily: "var(--font-orbitron)",
-                  background: "linear-gradient(135deg, #ffffff 0%, #aabbff 50%, #6677ff 100%)",
+                  background: "linear-gradient(135deg, #ffffff 0%, #B0B7C6 55%, #3A4154 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -66,14 +92,14 @@ export default function Home() {
               <a
                 href="/resume/Anish_Katam_Resume.pdf"
                 target="_blank"
-                className="px-5 py-2 rounded-full text-sm font-semibold border border-blue-500/50 text-blue-300 hover:bg-blue-500/10 transition-colors"
+                className="px-5 py-2 rounded-full text-sm font-semibold border border-[#B0B7C6]/35 text-[#B0B7C6] hover:bg-white/5 transition-colors"
                 style={{ fontFamily: "var(--font-orbitron)" }}
               >
                 Resume
               </a>
               <a
                 href="/contact"
-                className="px-5 py-2 rounded-full text-sm font-semibold bg-blue-600 hover:bg-blue-500 transition-colors"
+                className="px-5 py-2 rounded-full text-sm font-semibold bg-[#3A4154] hover:bg-[#4A5168] text-white transition-colors"
                 style={{ fontFamily: "var(--font-orbitron)" }}
               >
                 Contact
@@ -86,10 +112,10 @@ export default function Home() {
                 href="https://github.com/AnishKatam"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all"
+                className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-zinc-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all"
                 aria-label="GitHub"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
                 </svg>
               </a>
@@ -98,10 +124,10 @@ export default function Home() {
                 href="https://www.linkedin.com/in/anishkatam/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-zinc-400 hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:bg-[#0A66C2]/10 transition-all"
+                className="w-9 h-9 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center text-zinc-400 hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:bg-[#0A66C2]/10 transition-all"
                 aria-label="LinkedIn"
               >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
@@ -109,23 +135,29 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Right column — featured projects + neural viz, sits below the badge */}
+        <div className="hidden lg:flex flex-col gap-3 absolute top-[230px] right-8 w-[360px] z-20">
+          <FeaturedProjectsCard />
+          <NeuralVizCard />
+        </div>
+
+        {/* Technical Skills — floating bottom-left (desktop only) */}
+        <div className="hidden lg:block absolute bottom-20 left-8 w-[260px] z-20">
+          <TechnicalSkillsCard />
+        </div>
+
+        {/* Stacked fallback (mobile / smaller screens) */}
+        <div className="lg:hidden absolute bottom-8 left-0 right-0 px-6 flex flex-col gap-4">
+          <TechnicalSkillsCard compact />
+        </div>
+
         <ScrollHint />
       </section>
 
-      {/* ── SKILLS ───────────────────────────────────────────── */}
-      <section className="relative z-10 py-24 px-6">
-        <div className="max-w-4xl mx-auto">
-          <SectionHeading>Skills</SectionHeading>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mt-10">
-            {[
-              "Python", "Java", "JavaScript", "React",
-              "Node.js", "HTML / CSS", "Tailwind", "SQL",
-              "PHP", "JavaFX", "Git", "Photoshop",
-            ].map((skill) => (
-              <SkillPill key={skill}>{skill}</SkillPill>
-            ))}
-          </div>
-        </div>
+      {/* Mobile featured projects + neural viz */}
+      <section className="lg:hidden relative z-10 px-6 -mt-8 mb-16 flex flex-col gap-4">
+        <FeaturedProjectsCard />
+        <NeuralVizCard />
       </section>
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
@@ -170,8 +202,8 @@ export default function Home() {
             >
               <div>
                 <p
-                  className="text-xs tracking-[0.3em] text-blue-400 uppercase mb-3"
-                  style={{ fontFamily: "var(--font-orbitron)" }}
+                  className="text-xs tracking-[0.3em] uppercase mb-3"
+                  style={{ fontFamily: "var(--font-orbitron)", color: "#B0B7C6" }}
                 >
                   Let&apos;s Connect
                 </p>
@@ -192,7 +224,7 @@ export default function Home() {
                   backdropFilter: "blur(14px)",
                   WebkitBackdropFilter: "blur(14px)",
                   border: "1px solid rgba(255,255,255,0.18)",
-                  boxShadow: "inset 0 0 24px rgba(100,140,255,0.10), 0 0 18px rgba(100,140,255,0.12)",
+                  boxShadow: "inset 0 0 24px rgba(176,183,198,0.10), 0 0 18px rgba(176,183,198,0.10)",
                 }}
               >
                 Say Hello
@@ -266,23 +298,429 @@ export default function Home() {
   );
 }
 
+/* ── Floating Cards ─────────────────────────────────────────── */
+
+function HoloCard({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative rounded-2xl p-[1px] ${className}`}
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(103,232,249,0.45) 0%, rgba(34,211,238,0.08) 40%, rgba(255,255,255,0.04) 60%, rgba(20,184,166,0.35) 100%)",
+      }}
+    >
+      <div
+        className="relative rounded-2xl overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(10,18,28,0.85) 0%, rgba(8,12,22,0.85) 100%)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.5)",
+        }}
+      >
+        {/* Corner brackets */}
+        {[
+          { top: 8, left: 8, borderTop: 1, borderLeft: 1 },
+          { top: 8, right: 8, borderTop: 1, borderRight: 1 },
+          { bottom: 8, left: 8, borderBottom: 1, borderLeft: 1 },
+          { bottom: 8, right: 8, borderBottom: 1, borderRight: 1 },
+        ].map((p, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              width: 10,
+              height: 10,
+              borderColor: "rgba(103,232,249,0.55)",
+              borderStyle: "solid",
+              borderWidth: 0,
+              ...p,
+            }}
+          />
+        ))}
+        {children}
+      </div>
+    </div>
+  );
+}
+
+function CardLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p
+      className="text-[10px] tracking-[0.32em] uppercase text-cyan-300/90"
+      style={{
+        fontFamily: "var(--font-orbitron)",
+        textShadow: "0 0 8px rgba(34,211,238,0.4)",
+      }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function NeuralVizCard() {
+  return (
+    <HoloCard>
+      <div className="p-3">
+        <div className="flex items-center justify-between mb-2">
+          <CardLabel>Neural Visualization</CardLabel>
+          <div className="flex items-center gap-1.5">
+            <span
+              className="w-1.5 h-1.5 rounded-full bg-cyan-300"
+              style={{ animation: "vizLed 1.4s ease-in-out infinite" }}
+            />
+            <span
+              className="text-[9px] tracking-[0.25em] text-cyan-300/80"
+              style={{ fontFamily: "var(--font-orbitron)" }}
+            >
+              LIVE
+            </span>
+          </div>
+        </div>
+        <div
+          className="relative h-[180px] rounded-lg overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(8,18,26,0.75) 0%, rgba(4,10,18,0.85) 100%)",
+            border: "1px solid rgba(103,232,249,0.15)",
+            boxShadow: "inset 0 0 24px rgba(34,211,238,0.06)",
+          }}
+        >
+          {/* grid backdrop */}
+          <svg
+            className="absolute inset-0 w-full h-full opacity-30 pointer-events-none"
+            viewBox="0 0 100 60"
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <pattern
+                id="nv-grid"
+                x="0"
+                y="0"
+                width="10"
+                height="10"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 10 0 L 0 0 0 10"
+                  fill="none"
+                  stroke="rgba(34,211,238,0.18)"
+                  strokeWidth="0.15"
+                />
+              </pattern>
+            </defs>
+            <rect width="100" height="60" fill="url(#nv-grid)" />
+          </svg>
+          <ParticleNetwork />
+        </div>
+        <div className="mt-2 flex items-center justify-between text-[9px] text-cyan-300/55 font-mono tracking-wider">
+          <span>5L · 26N · 96W</span>
+          <span>acc 99.4%</span>
+        </div>
+      </div>
+    </HoloCard>
+  );
+}
+
+function FeaturedProjectsCard() {
+  return (
+    <HoloCard>
+      <div className="p-4">
+        <CardLabel>Featured Projects</CardLabel>
+        <div className="grid grid-cols-2 gap-3 mt-3">
+          <ProjectMini
+            title="Neural Data Visualizer"
+            thumb={<NeuralThumb />}
+            uptime={99.9}
+          />
+          <ProjectMini
+            title="Cloud Architecture Optimizer"
+            thumb={<CloudThumb />}
+            uptime={99.9}
+          />
+        </div>
+      </div>
+    </HoloCard>
+  );
+}
+
+function ProjectMini({
+  title,
+  thumb,
+  uptime,
+}: {
+  title: string;
+  thumb: React.ReactNode;
+  uptime: number;
+}) {
+  return (
+    <div
+      className="rounded-lg p-2.5 border border-cyan-400/15 hover:border-cyan-300/40 transition-colors group"
+      style={{ background: "rgba(8,18,26,0.6)" }}
+    >
+      <div
+        className="rounded-md overflow-hidden mb-2 h-16 flex items-center justify-center"
+        style={{
+          background:
+            "linear-gradient(135deg, rgba(34,211,238,0.12) 0%, rgba(15,23,42,0.6) 100%)",
+          border: "1px solid rgba(103,232,249,0.15)",
+        }}
+      >
+        {thumb}
+      </div>
+      <p
+        className="text-[11px] font-semibold text-white leading-tight mb-2 group-hover:text-cyan-100 transition-colors"
+        style={{ fontFamily: "var(--font-orbitron)" }}
+      >
+        {title}
+      </p>
+      <div className="relative h-1 rounded-full bg-white/5 overflow-hidden mb-1">
+        <div
+          className="absolute inset-y-0 left-0 rounded-full"
+          style={{
+            width: `${uptime}%`,
+            background: "linear-gradient(90deg, #22d3ee, #67e8f9)",
+            boxShadow: "0 0 8px rgba(34,211,238,0.6)",
+          }}
+        />
+      </div>
+      <p className="text-[9px] text-cyan-300/70 text-right tracking-wider">
+        Uptime: {uptime}%
+      </p>
+    </div>
+  );
+}
+
+function NeuralThumb() {
+  return (
+    <svg viewBox="0 0 80 50" className="w-full h-full">
+      <g stroke="rgba(103,232,249,0.6)" strokeWidth="0.5" fill="none">
+        <line x1="10" y1="10" x2="30" y2="25" />
+        <line x1="10" y1="10" x2="30" y2="40" />
+        <line x1="10" y1="25" x2="30" y2="25" />
+        <line x1="10" y1="40" x2="30" y2="40" />
+        <line x1="30" y1="25" x2="50" y2="15" />
+        <line x1="30" y1="25" x2="50" y2="35" />
+        <line x1="30" y1="40" x2="50" y2="35" />
+        <line x1="50" y1="15" x2="70" y2="25" />
+        <line x1="50" y1="35" x2="70" y2="25" />
+      </g>
+      <g fill="rgba(167,243,250,0.95)">
+        <circle cx="10" cy="10" r="1.6" />
+        <circle cx="10" cy="25" r="1.6" />
+        <circle cx="10" cy="40" r="1.6" />
+        <circle cx="30" cy="25" r="2" />
+        <circle cx="30" cy="40" r="2" />
+        <circle cx="50" cy="15" r="2" />
+        <circle cx="50" cy="35" r="2" />
+        <circle cx="70" cy="25" r="2.2" />
+      </g>
+    </svg>
+  );
+}
+
+function CloudThumb() {
+  return (
+    <svg viewBox="0 0 80 50" className="w-full h-full">
+      <g stroke="rgba(103,232,249,0.7)" strokeWidth="0.8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 28 Q18 28 18 24 Q18 19 24 19 Q26 13 33 13 Q41 13 43 20 Q49 20 49 25 Q49 30 44 30 L24 30 Q22 30 22 28 Z" />
+        <line x1="33" y1="30" x2="33" y2="36" />
+        <line x1="20" y1="40" x2="46" y2="40" />
+        <line x1="20" y1="40" x2="20" y2="36" />
+        <line x1="33" y1="40" x2="33" y2="36" />
+        <line x1="46" y1="40" x2="46" y2="36" />
+        <circle cx="20" cy="40" r="1.6" />
+        <circle cx="33" cy="40" r="1.6" />
+        <circle cx="46" cy="40" r="1.6" />
+        <circle cx="60" cy="20" r="1.4" />
+        <circle cx="62" cy="32" r="1.4" />
+        <line x1="49" y1="22" x2="58" y2="20" />
+        <line x1="49" y1="27" x2="60" y2="31" />
+      </g>
+    </svg>
+  );
+}
+
+function TechnicalSkillsCard({ compact = false }: { compact?: boolean }) {
+  const skills = [
+    { label: "React", icon: <ReactIcon /> },
+    { label: "AWS", icon: <AWSIcon /> },
+    { label: "Docker", icon: <DockerIcon /> },
+    { label: "Next.js", icon: <NextIcon /> },
+    { label: "GitHub", icon: <GitHubIcon /> },
+    { label: "TypeScript", icon: <TSIcon /> },
+    { label: "Python", icon: <PythonIcon /> },
+    { label: "CI/CD", icon: <CICDIcon /> },
+    { label: "Config", icon: <ConfigIcon /> },
+  ];
+  return (
+    <HoloCard>
+      <div className={compact ? "p-3" : "p-4"}>
+        <CardLabel>Technical Skills</CardLabel>
+        <div className="grid grid-cols-3 gap-2 mt-3">
+          {skills.map((s) => (
+            <div
+              key={s.label}
+              className="aspect-square rounded-lg border border-cyan-400/15 flex items-center justify-center text-cyan-100/85 hover:text-cyan-100 hover:border-cyan-300/40 hover:bg-cyan-400/5 transition-all"
+              style={{ background: "rgba(8,18,26,0.55)" }}
+              title={s.label}
+            >
+              {s.icon}
+            </div>
+          ))}
+        </div>
+      </div>
+    </HoloCard>
+  );
+}
+
+/* ── Tech Icons (inline SVGs) ───────────────────────────────── */
+
+function ReactIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
+      <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+      <ellipse cx="12" cy="12" rx="10" ry="3.8" />
+      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)" />
+      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(120 12 12)" />
+    </svg>
+  );
+}
+
+function AWSIcon() {
+  return (
+    <svg viewBox="0 0 32 18" className="w-7 h-5" fill="currentColor">
+      <text
+        x="16"
+        y="11"
+        textAnchor="middle"
+        fontFamily="var(--font-orbitron), sans-serif"
+        fontSize="8.5"
+        fontWeight="800"
+        letterSpacing="0.5"
+      >
+        aws
+      </text>
+      <path d="M4 15 Q16 19 28 15" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DockerIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+      <rect x="3" y="11" width="3" height="3" rx="0.3" />
+      <rect x="7" y="11" width="3" height="3" rx="0.3" />
+      <rect x="11" y="11" width="3" height="3" rx="0.3" />
+      <rect x="15" y="11" width="3" height="3" rx="0.3" />
+      <rect x="7" y="7" width="3" height="3" rx="0.3" />
+      <rect x="11" y="7" width="3" height="3" rx="0.3" />
+      <rect x="11" y="3" width="3" height="3" rx="0.3" />
+      <path
+        d="M2 14 Q4 18 9 18 L17 18 Q22 18 22 13 Q21 12 19 12.5 Q18.5 10.5 16.5 10.2 Q16 12 17 13"
+        fill="currentColor"
+        opacity="0.9"
+      />
+    </svg>
+  );
+}
+
+function NextIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
+      <circle cx="12" cy="12" r="9.5" />
+      <path d="M8 7 L8 17 M8 7 L16 17 M16 9 L16 17" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function GitHubIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    </svg>
+  );
+}
+
+function TSIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
+      <rect x="2" y="2" width="20" height="20" rx="2" opacity="0.15" />
+      <text
+        x="12"
+        y="16"
+        textAnchor="middle"
+        fontFamily="var(--font-orbitron), sans-serif"
+        fontSize="10"
+        fontWeight="800"
+      >
+        TS
+      </text>
+    </svg>
+  );
+}
+
+function PythonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
+      <path d="M12 3 Q8 3 8 6 L8 9 L14 9 L14 10 L6 10 Q3 10 3 13 L3 15 Q3 17 5 17 L8 17 L8 14 Q8 13 9 13 L15 13 Q17 13 17 11 L17 6 Q17 3 13 3 Z" strokeLinejoin="round" />
+      <path d="M12 21 Q16 21 16 18 L16 15 L10 15 L10 14 L18 14 Q21 14 21 11 L21 9 Q21 7 19 7 L16 7 L16 10 Q16 11 15 11 L9 11 Q7 11 7 13 L7 18 Q7 21 11 21 Z" strokeLinejoin="round" opacity="0.55" />
+      <circle cx="10.5" cy="6" r="0.6" fill="currentColor" />
+      <circle cx="13.5" cy="18" r="0.6" fill="currentColor" />
+    </svg>
+  );
+}
+
+function CICDIcon() {
+  return (
+    <svg viewBox="0 0 32 16" className="w-7 h-4" fill="currentColor">
+      <text
+        x="16"
+        y="11"
+        textAnchor="middle"
+        fontFamily="var(--font-orbitron), sans-serif"
+        fontSize="8"
+        fontWeight="800"
+        letterSpacing="0.4"
+      >
+        CI/CD
+      </text>
+    </svg>
+  );
+}
+
+function ConfigIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+      <line x1="4" y1="7" x2="20" y2="7" />
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <line x1="4" y1="17" x2="20" y2="17" />
+      <circle cx="9" cy="7" r="1.8" fill="#0a0a0a" />
+      <circle cx="15" cy="12" r="1.8" fill="#0a0a0a" />
+      <circle cx="7" cy="17" r="1.8" fill="#0a0a0a" />
+    </svg>
+  );
+}
+
+/* ── Reusable sections ──────────────────────────────────────── */
+
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
     <h2
       className="text-2xl font-bold tracking-[0.2em] uppercase text-white/90"
       style={{ fontFamily: "var(--font-orbitron)" }}
     >
-      <span className="text-blue-400 mr-2">—</span>
+      <span className="text-[#B0B7C6] mr-2">—</span>
       {children}
     </h2>
-  );
-}
-
-function SkillPill({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="px-4 py-2 rounded-lg border border-white/10 bg-white/[0.03] text-sm text-zinc-300 text-center hover:border-blue-500/40 hover:bg-blue-500/5 transition-colors cursor-default">
-      {children}
-    </div>
   );
 }
 
@@ -292,20 +730,20 @@ function ProjectCard({ title, desc, tags, href }: { title: string; desc: string;
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="block rounded-xl border border-white/10 bg-white/[0.03] p-6 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all group"
+      className="block rounded-xl border border-white/10 bg-white/[0.03] p-6 hover:border-[#B0B7C6]/30 hover:bg-white/5 transition-all group"
     >
       <div className="flex items-start justify-between mb-2">
-        <h3 className="text-base font-bold text-white group-hover:text-blue-300 transition-colors" style={{ fontFamily: "var(--font-orbitron)" }}>
+        <h3 className="text-base font-bold text-white group-hover:text-[#B0B7C6] transition-colors" style={{ fontFamily: "var(--font-orbitron)" }}>
           {title}
         </h3>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-zinc-600 group-hover:text-blue-400 transition-colors shrink-0 ml-2 mt-0.5">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4 text-zinc-600 group-hover:text-[#B0B7C6] transition-colors shrink-0 ml-2 mt-0.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
         </svg>
       </div>
       <p className="text-zinc-400 text-sm leading-relaxed mb-4">{desc}</p>
       <div className="flex flex-wrap gap-2">
         {tags.map((t) => (
-          <span key={t} className="text-xs px-2 py-1 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
+          <span key={t} className="text-xs px-2 py-1 rounded bg-[#3A4154]/40 text-[#B0B7C6] border border-[#3A4154]">
             {t}
           </span>
         ))}

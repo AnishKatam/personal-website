@@ -194,7 +194,7 @@ export default function AwesomeBadge() {
               animation: "badgeChipGlow 3.5s ease-in-out infinite",
             }}
           >
-            {/* Slow-rotating outer ring */}
+            {/*rotating outer ring */}
             <svg
               viewBox="0 0 60 60"
               width="44"
@@ -374,13 +374,8 @@ export default function AwesomeBadge() {
               />
               LIVE
             </span>
-            <span style={{ animation: "badgeTickerPulse 2.4s ease-in-out infinite" }}>
-              ID·001
-            </span>
           </div>
 
-         
-        
         </div>
       </div>
     </div>
