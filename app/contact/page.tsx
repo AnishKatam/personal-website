@@ -1,6 +1,7 @@
 import ShootingStars from "../components/ShootingStars";
 import ContactForm from "../components/ContactForm";
 import ParticleStrings from "../components/ParticleStrings";
+import Link from "next/link";
 
 export const metadata = { title: "Contact Me" };
 
@@ -12,16 +13,16 @@ export default function ContactPage() {
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-24">
         <div className="max-w-2xl w-full">
-          <a
-            href="/"
-            className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs tracking-widest uppercase mb-10 transition-colors"
-            style={{ fontFamily: "var(--font-orbitron)" }}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            Back
-          </a>
+       <Link
+          href="/"
+          className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-xs tracking-widest uppercase mb-10 transition-colors"
+          style={{ fontFamily: "var(--font-orbitron)" }}
+        >
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="w-4 h-4">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+  </svg>
+  Back
+</Link>
 
           <p
             className="text-xs tracking-[0.35em] text-blue-400 uppercase mb-2"
