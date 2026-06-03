@@ -1,16 +1,14 @@
 import ShootingStars from "../components/ShootingStars";
-import ParticleNetwork from "../components/ParticleNetwork";
 import ContactForm from "../components/ContactForm";
-import AwesomeBadge from "../components/AwesomeBadge";
+import ParticleStrings from "../components/ParticleStrings";
 
-export const metadata = { title: "Contact — Anish Katam" };
+export const metadata = { title: "Contact Me" };
 
 export default function ContactPage() {
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white">
       <ShootingStars />
-      <ParticleNetwork />
-      <AwesomeBadge />
+      <ParticleStrings />
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-24">
         <div className="max-w-2xl w-full">

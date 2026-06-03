@@ -1,13 +1,19 @@
 import Image from "next/image";
 import profilePic from "../assets/322914.jpeg";
-import pfpBackground from "../assets/pfpbackground1.png";
-import freakyCat from "../assets/freaky-cat-freaky-ezgif.com-resize.gif";
 import ShootingStars from "./components/ShootingStars";
-import ParticleNetwork from "./components/ParticleNetwork";
 import ParticleStrings from "./components/ParticleStrings";
 import ScrollHint from "./components/ScrollHint";
 import AwesomeBadge from "./components/AwesomeBadge";
-
+/*--- Icon SVGs ---*/
+import CIcon from "../assets/SVGs/c.svg";
+import AWSIcon from "../assets/SVGs/aws.svg";
+import DockerIcon from "../assets/SVGs/docker-icon.svg";
+import NodeJSIcon from "../assets/SVGs/nodejs.svg";
+import CICDIcon from "../assets/SVGs/github-actions.svg";
+import NumpyIcon from "../assets/SVGs/numpy.svg";
+import TableauIcon from "../assets/SVGs/tableau.svg";
+import XamppIcon from "../assets/SVGs/xampp.svg";
+import MongoDBIcon from "../assets/SVGs/mongodb-icon.svg";
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#0a0a0a] overflow-x-hidden text-white">
@@ -22,22 +28,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row items-center gap-10 max-w-3xl w-full">
           {/* Profile photo */}
           <div className="relative shrink-0 w-44 h-44">
-            <div
-              className="absolute inset-0 scale-[1.7] pointer-events-none"
-              style={{
-                maskImage: "radial-gradient(circle, black 28%, transparent 72%)",
-                WebkitMaskImage: "radial-gradient(circle, black 28%, transparent 72%)",
-              }}
-            >
-              <Image
-                src={pfpBackground}
-                alt=""
-                aria-hidden
-                fill
-                className="object-cover opacity-90"
-                priority
-              />
-            </div>
+            
             <div
               className="relative w-44 h-44 rounded-full overflow-hidden border-2 border-white/10"
               style={{
@@ -98,7 +89,7 @@ export default function Home() {
                 Resume
               </a>
               <a
-                href="/contact"
+                href="mailto:anishhkatam@gmail.com"
                 className="px-5 py-2 rounded-full text-sm font-semibold bg-[#3A4154] hover:bg-[#4A5168] text-white transition-colors"
                 style={{ fontFamily: "var(--font-orbitron)" }}
               >
@@ -135,12 +126,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right column — featured projects + neural viz, sits below the badge */}
-        <div className="hidden lg:flex flex-col gap-3 absolute top-[230px] right-8 w-[360px] z-20">
-          <FeaturedProjectsCard />
-          <NeuralVizCard />
-        </div>
-
+      
         {/* Technical Skills — floating bottom-left (desktop only) */}
         <div className="hidden lg:block absolute bottom-20 left-8 w-[260px] z-20">
           <TechnicalSkillsCard />
@@ -154,11 +140,7 @@ export default function Home() {
         <ScrollHint />
       </section>
 
-      {/* Mobile featured projects + neural viz */}
-      <section className="lg:hidden relative z-10 px-6 -mt-8 mb-16 flex flex-col gap-4">
-        <FeaturedProjectsCard />
-        <NeuralVizCard />
-      </section>
+   
 
       {/* ── PROJECTS ─────────────────────────────────────────── */}
       <section className="relative z-10 py-24 px-6">
@@ -211,7 +193,7 @@ export default function Home() {
                   className="text-lg font-bold text-white leading-snug"
                   style={{ fontFamily: "var(--font-orbitron)" }}
                 >
-                  Open to new opportunities and experiences.
+                  Open to new opportunities.
                 </p>
                 <p className="text-zinc-500 text-sm mt-2">Don&apos;t be a stranger!</p>
               </div>
@@ -229,19 +211,6 @@ export default function Home() {
               >
                 Say Hello
               </a>
-            </div>
-
-            {/* Freaky cat */}
-            <div
-              className="justify-self-center self-stretch rounded-xl border border-white/10 bg-white/[0.03] p-3 flex items-center justify-center w-[168px] h-[168px] md:w-[168px] md:h-auto"
-              aria-hidden
-            >
-              <Image
-                src={freakyCat}
-                alt="freaky cat"
-                unoptimized
-                className="w-full h-full object-contain rounded-lg select-none pointer-events-none"
-              />
             </div>
 
             {/* Discord card */}
@@ -298,7 +267,7 @@ export default function Home() {
   );
 }
 
-/* ── Floating Cards ─────────────────────────────────────────── */
+/* ── Cards ─────────────────────────────────────────── */
 
 function HoloCard({
   children,
@@ -366,91 +335,7 @@ function CardLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function NeuralVizCard() {
-  return (
-    <HoloCard>
-      <div className="p-3">
-        <div className="flex items-center justify-between mb-2">
-          <CardLabel>Neural Visualization</CardLabel>
-          <div className="flex items-center gap-1.5">
-            <span
-              className="w-1.5 h-1.5 rounded-full bg-cyan-300"
-              style={{ animation: "vizLed 1.4s ease-in-out infinite" }}
-            />
-            <span
-              className="text-[9px] tracking-[0.25em] text-cyan-300/80"
-              style={{ fontFamily: "var(--font-orbitron)" }}
-            >
-              LIVE
-            </span>
-          </div>
-        </div>
-        <div
-          className="relative h-[180px] rounded-lg overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(8,18,26,0.75) 0%, rgba(4,10,18,0.85) 100%)",
-            border: "1px solid rgba(103,232,249,0.15)",
-            boxShadow: "inset 0 0 24px rgba(34,211,238,0.06)",
-          }}
-        >
-          {/* grid backdrop */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-30 pointer-events-none"
-            viewBox="0 0 100 60"
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <pattern
-                id="nv-grid"
-                x="0"
-                y="0"
-                width="10"
-                height="10"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M 10 0 L 0 0 0 10"
-                  fill="none"
-                  stroke="rgba(34,211,238,0.18)"
-                  strokeWidth="0.15"
-                />
-              </pattern>
-            </defs>
-            <rect width="100" height="60" fill="url(#nv-grid)" />
-          </svg>
-          <ParticleNetwork />
-        </div>
-        <div className="mt-2 flex items-center justify-between text-[9px] text-cyan-300/55 font-mono tracking-wider">
-          <span>5L · 26N · 96W</span>
-          <span>acc 99.4%</span>
-        </div>
-      </div>
-    </HoloCard>
-  );
-}
 
-function FeaturedProjectsCard() {
-  return (
-    <HoloCard>
-      <div className="p-4">
-        <CardLabel>Featured Projects</CardLabel>
-        <div className="grid grid-cols-2 gap-3 mt-3">
-          <ProjectMini
-            title="Neural Data Visualizer"
-            thumb={<NeuralThumb />}
-            uptime={99.9}
-          />
-          <ProjectMini
-            title="Cloud Architecture Optimizer"
-            thumb={<CloudThumb />}
-            uptime={99.9}
-          />
-        </div>
-      </div>
-    </HoloCard>
-  );
-}
 
 function ProjectMini({
   title,
@@ -551,162 +436,37 @@ function CloudThumb() {
 
 function TechnicalSkillsCard({ compact = false }: { compact?: boolean }) {
   const skills = [
-    { label: "React", icon: <ReactIcon /> },
-    { label: "AWS", icon: <AWSIcon /> },
-    { label: "Docker", icon: <DockerIcon /> },
-    { label: "Next.js", icon: <NextIcon /> },
-    { label: "GitHub", icon: <GitHubIcon /> },
-    { label: "TypeScript", icon: <TSIcon /> },
-    { label: "Python", icon: <PythonIcon /> },
-    { label: "CI/CD", icon: <CICDIcon /> },
-    { label: "Config", icon: <ConfigIcon /> },
+    { label: "C", icon: CIcon },
+    { label: "AWS", icon: AWSIcon },
+    { label: "Docker", icon: DockerIcon },
+    { label: "Node.js", icon: NodeJSIcon },
+    { label: "CI/CD", icon: CICDIcon },
+    { label: "NumPy", icon: NumpyIcon },
+    { label: "Tableau", icon: TableauIcon },
+    { label: "XAMPP", icon: XamppIcon },
+    { label: "MongoDB", icon: MongoDBIcon },
   ];
   return (
     <HoloCard>
       <div className={compact ? "p-3" : "p-4"}>
         <CardLabel>Technical Skills</CardLabel>
         <div className="grid grid-cols-3 gap-2 mt-3">
-          {skills.map((s) => (
-            <div
-              key={s.label}
-              className="aspect-square rounded-lg border border-cyan-400/15 flex items-center justify-center text-cyan-100/85 hover:text-cyan-100 hover:border-cyan-300/40 hover:bg-cyan-400/5 transition-all"
-              style={{ background: "rgba(8,18,26,0.55)" }}
-              title={s.label}
-            >
-              {s.icon}
-            </div>
-          ))}
+          {skills.map((s) => {
+            const IconComponent = s.icon;
+            return (
+              <div
+                key={s.label}
+                className="aspect-square rounded-lg border border-cyan-400/15 flex items-center justify-center text-cyan-100/85 hover:text-cyan-100 hover:border-cyan-300/40 hover:bg-cyan-400/5 transition-all"
+                style={{ background: "rgba(8,18,26,0.55)" }}
+                title={s.label}
+              >
+                <IconComponent />
+              </div>
+            );
+          })}
         </div>
       </div>
     </HoloCard>
-  );
-}
-
-/* ── Tech Icons (inline SVGs) ───────────────────────────────── */
-
-function ReactIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
-      <circle cx="12" cy="12" r="1.6" fill="currentColor" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.8" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(60 12 12)" />
-      <ellipse cx="12" cy="12" rx="10" ry="3.8" transform="rotate(120 12 12)" />
-    </svg>
-  );
-}
-
-function AWSIcon() {
-  return (
-    <svg viewBox="0 0 32 18" className="w-7 h-5" fill="currentColor">
-      <text
-        x="16"
-        y="11"
-        textAnchor="middle"
-        fontFamily="var(--font-orbitron), sans-serif"
-        fontSize="8.5"
-        fontWeight="800"
-        letterSpacing="0.5"
-      >
-        aws
-      </text>
-      <path d="M4 15 Q16 19 28 15" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function DockerIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-      <rect x="3" y="11" width="3" height="3" rx="0.3" />
-      <rect x="7" y="11" width="3" height="3" rx="0.3" />
-      <rect x="11" y="11" width="3" height="3" rx="0.3" />
-      <rect x="15" y="11" width="3" height="3" rx="0.3" />
-      <rect x="7" y="7" width="3" height="3" rx="0.3" />
-      <rect x="11" y="7" width="3" height="3" rx="0.3" />
-      <rect x="11" y="3" width="3" height="3" rx="0.3" />
-      <path
-        d="M2 14 Q4 18 9 18 L17 18 Q22 18 22 13 Q21 12 19 12.5 Q18.5 10.5 16.5 10.2 Q16 12 17 13"
-        fill="currentColor"
-        opacity="0.9"
-      />
-    </svg>
-  );
-}
-
-function NextIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
-      <circle cx="12" cy="12" r="9.5" />
-      <path d="M8 7 L8 17 M8 7 L16 17 M16 9 L16 17" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function GitHubIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-    </svg>
-  );
-}
-
-function TSIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="currentColor">
-      <rect x="2" y="2" width="20" height="20" rx="2" opacity="0.15" />
-      <text
-        x="12"
-        y="16"
-        textAnchor="middle"
-        fontFamily="var(--font-orbitron), sans-serif"
-        fontSize="10"
-        fontWeight="800"
-      >
-        TS
-      </text>
-    </svg>
-  );
-}
-
-function PythonIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4">
-      <path d="M12 3 Q8 3 8 6 L8 9 L14 9 L14 10 L6 10 Q3 10 3 13 L3 15 Q3 17 5 17 L8 17 L8 14 Q8 13 9 13 L15 13 Q17 13 17 11 L17 6 Q17 3 13 3 Z" strokeLinejoin="round" />
-      <path d="M12 21 Q16 21 16 18 L16 15 L10 15 L10 14 L18 14 Q21 14 21 11 L21 9 Q21 7 19 7 L16 7 L16 10 Q16 11 15 11 L9 11 Q7 11 7 13 L7 18 Q7 21 11 21 Z" strokeLinejoin="round" opacity="0.55" />
-      <circle cx="10.5" cy="6" r="0.6" fill="currentColor" />
-      <circle cx="13.5" cy="18" r="0.6" fill="currentColor" />
-    </svg>
-  );
-}
-
-function CICDIcon() {
-  return (
-    <svg viewBox="0 0 32 16" className="w-7 h-4" fill="currentColor">
-      <text
-        x="16"
-        y="11"
-        textAnchor="middle"
-        fontFamily="var(--font-orbitron), sans-serif"
-        fontSize="8"
-        fontWeight="800"
-        letterSpacing="0.4"
-      >
-        CI/CD
-      </text>
-    </svg>
-  );
-}
-
-function ConfigIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
-      <line x1="4" y1="7" x2="20" y2="7" />
-      <line x1="4" y1="12" x2="20" y2="12" />
-      <line x1="4" y1="17" x2="20" y2="17" />
-      <circle cx="9" cy="7" r="1.8" fill="#0a0a0a" />
-      <circle cx="15" cy="12" r="1.8" fill="#0a0a0a" />
-      <circle cx="7" cy="17" r="1.8" fill="#0a0a0a" />
-    </svg>
   );
 }
 

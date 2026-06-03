@@ -1,4 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { createClient } from '@supabase/supabase-js'
+import { NextRequest, NextResponse } from 'next/server'
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+);
 
 export async function POST(req: NextRequest) {
   const { name, email, subject, message } = await req.json();
@@ -7,30 +12,12 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_ANON_KEY;
+const { error } = await supabase
+    .from('message')        // table name
+    .insert({ name, email, subject, message })
 
-  if (!supabaseUrl || !supabaseKey) {
-    console.error("Supabase env vars not set");
-    return NextResponse.json({ error: "Server misconfigured" }, { status: 500 });
+  if (error){
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
-
-  const res = await fetch(`${supabaseUrl}/rest/v1/contacts`, {
-    method: "POST",
-    headers: {
-      apikey: supabaseKey,
-      Authorization: `Bearer ${supabaseKey}`,
-      "Content-Type": "application/json",
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify({ name, email, subject: subject || null, message }),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    console.error("Supabase error:", text);
-    return NextResponse.json({ error: "Failed to save message" }, { status: 500 });
-  }
-
   return NextResponse.json({ success: true });
 }

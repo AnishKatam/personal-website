@@ -349,32 +349,6 @@ export default function AwesomeBadge() {
           </div>
 
        
-          <div
-            style={{
-              marginTop: "7px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              fontFamily: "var(--font-mono), ui-monospace, monospace",
-              fontSize: "5.5px",
-              letterSpacing: "0.14em",
-              color: "rgba(170,195,255,0.7)",
-              padding: "0 2px",
-            }}
-          >
-            <span style={{ display: "flex", alignItems: "center", gap: "3px", background: "rgba(233, 44, 44, 0.1)", padding: "1px 3px", borderRadius: "4px" }}>
-              <span
-                style={{
-                  width: "4px",
-                  height: "4px",
-                  borderRadius: "50%",
-                  background: "#c94641",
-                  animation: "badgeLed 1.6s ease-in-out infinite",
-                }}
-              />
-              LIVE
-            </span>
-          </div>
 
         </div>
       </div>

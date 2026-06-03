@@ -99,14 +99,14 @@ export default function ContactForm() {
           name="message"
           required
           rows={6}
-          placeholder="Tell me what you have in mind..."
+          placeholder="Your message here..."
           className={`${inputClass} resize-none`}
         />
       </div>
 
       {status === "error" && (
         <p className="text-red-400 text-xs text-center">
-          Something went wrong. Try emailing me directly at anishhkatam@gmail.com
+          Error 001: DATA_NOT_SENT - Database failed to save the message.
         </p>
       )}
 

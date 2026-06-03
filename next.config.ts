@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],//changes to avif or webp when needed
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,        // match any .svg import
+      use: ['@svgr/webpack'], // transform into React component
+    });
+    return config;         
+  },
   async headers() { 
     return [{
       source: '/(.*)',
