@@ -75,8 +75,8 @@ export default function Home() {
               </h1>
             </div>
 
-            <p className="text-zinc-400 text-base max-w-md leading-relaxed">
-              Im just surviving.
+            <p className="text-zinc-400 text-base max-w-lg leading-relaxed">
+              CS & Business Information Systems @ University of Rochester.
             </p>
 
             <div className="flex gap-3 mt-1 justify-center md:justify-start flex-wrap">
