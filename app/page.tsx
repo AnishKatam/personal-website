@@ -75,7 +75,7 @@ export default function Home() {
               </h1>
             </div>
 
-            <p className="text-zinc-400 text-base max-w-md leading-relaxed">
+            <p className="text-zinc-400 text-base max-w-lg leading-relaxed">
               CS & Business Information Systems @ University of Rochester.
             </p>
 
