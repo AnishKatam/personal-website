@@ -76,7 +76,7 @@ export default function Home() {
             </div>
 
             <p className="text-zinc-400 text-base max-w-md leading-relaxed">
-              I&apos;m a current Computer Science and Business Information Systems student at the University of Rochester.
+              CS & Business Information Systems @ University of Rochester.
             </p>
 
             <div className="flex gap-3 mt-1 justify-center md:justify-start flex-wrap">
