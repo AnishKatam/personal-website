@@ -8,7 +8,7 @@ export default function BackgroundMusic() {
     if (typeof window === 'undefined') return;
 
   
-    audioRef.current = new Audio('/audio/jazz.opus');
+    audioRef.current = new Audio('/audio/music.opus');
     audioRef.current.loop = true;
     audioRef.current.volume = 1; //100%
 
