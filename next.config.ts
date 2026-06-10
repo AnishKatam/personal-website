@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
         { key: 'X-Frame-Options', value: 'DENY' }, //clickjacking protection
         { key: 'X-Content-Type-Options', value: 'nosniff' }, //MIME sniffing protection
         { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' }, //policy that protects user privacy
+        { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }, //force HTTPS
+        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' }, 
       ],
     }];
   },

@@ -12,15 +12,11 @@
 
 # testing
 /coverage
-
-# next.js
 /.next/
 /out/
-
-# production
 /build
 
-# misc
+# others
 .DS_Store
 *.pem
 
@@ -30,13 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+
 .env*
-
-# vercel
 .vercel
-
-# claude code
 .claude/
 
 # typescript

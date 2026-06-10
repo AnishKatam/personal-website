@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Orbitron } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,15 +12,36 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const orbitron = Orbitron({
-  variable: "--font-orbitron",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
+const siteDescription =
+  "CS & Business Information Systems student at the University of Rochester and IT lead for DandyHacks. Projects, live Discord status, resume, and contact — open to internships.";
 
 export const metadata: Metadata = {
-  title: "Anish Katam",
-  description: "Built with Next.js",
+  metadataBase: new URL("https://anishkatam.com"),
+  title: {
+    default: "Anish Katam — Software Engineer",
+    template: "%s — Anish Katam",
+  },
+  description: siteDescription,
+  openGraph: {
+    title: "Anish Katam — Software Engineer",
+    description: siteDescription,
+    url: "https://anishkatam.com",
+    siteName: "Anish Katam",
+    type: "website",
+    images: [
+      {
+        url: "/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "Anish Katam",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: "Anish Katam — Software Engineer",
+    description: siteDescription,
+  },
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -42,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>

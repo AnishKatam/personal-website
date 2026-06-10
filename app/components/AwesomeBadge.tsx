@@ -168,21 +168,6 @@ export default function AwesomeBadge() {
           ))}
 
     
-          <div
-            style={{
-              position: "relative",
-              textAlign: "center",
-              fontSize: "20px",
-              lineHeight: 1,
-              marginBottom: "6px",
-              pointerEvents: "none",
-              color: "rgba(200,215,255,0.9)",
-              textShadow: "0 0 8px rgba(140,180,255,0.6)",
-              zIndex: 2,
-            }}
-          >
-            ♘ ♞
-          </div>
 
          
           <div
@@ -194,7 +179,6 @@ export default function AwesomeBadge() {
               animation: "badgeChipGlow 3.5s ease-in-out infinite",
             }}
           >
-            {/*rotating outer ring */}
             <svg
               viewBox="0 0 60 60"
               width="44"
@@ -282,7 +266,7 @@ export default function AwesomeBadge() {
          
           <div
             style={{
-              fontFamily: "var(--font-orbitron), sans-serif",
+              fontFamily: "var(--font-geist-sans), sans-serif",
               textAlign: "center",
               lineHeight: 1,
               position: "relative",
@@ -333,7 +317,7 @@ export default function AwesomeBadge() {
           >
             <div
               style={{
-                fontFamily: "var(--font-orbitron), sans-serif",
+                fontFamily: "var(--font-geist-sans), sans-serif",
                 fontSize: "16px",
                 fontWeight: 800,
                 letterSpacing: "0.32em",
