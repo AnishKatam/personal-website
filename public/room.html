@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>room</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0a0d; }
+  body {
+    font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #8a8a92;
+  }
+  canvas { display: block; }
+  .ui { position: fixed; z-index: 10; user-select: none; }
+  #status { left: 24px; bottom: 24px; }
+  #hint { right: 24px; bottom: 24px; text-align: right; line-height: 1.9; color: #5f5f66; }
+  #nav { right: 24px; top: 20px; display: flex; gap: 6px; }
+  #nav button {
+    background: transparent; border: 1px solid transparent; color: #6d6d75;
+    font: inherit; letter-spacing: inherit; text-transform: inherit; padding: 4px 10px; cursor: pointer;
+  }
+  #nav button:hover { color: #e6e6ea; }
+  #nav button.active { border-color: #8a8a92; color: #e6e6ea; }
+  #fade { position: fixed; inset: 0; background: #000; opacity: 0; pointer-events: none; transition: opacity .3s ease; z-index: 20; }
+  body.embed { background: transparent; }
+  body.embed #hint { display: none; }
+  body.embed #nav { right: 12px; top: 10px; }
+  body.embed #status { left: 12px; bottom: 12px; }
+</style>
+</head>
+<body>
+<div id="nav" class="ui">
+  <button data-scene="home" class="active">Home</button>
+  <button data-scene="office">Office</button>
+</div>
+<div id="status" class="ui">currently at home</div>
+<div id="hint" class="ui">drag &middot; orbit<br>right drag &middot; pan</div>
+<div id="fade"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+// scaffold — ?embed strips the void styling for the homepage iframe
+const EMBED = new URLSearchParams(location.search).has('embed');
+if (EMBED) {
+  document.body.classList.add('embed');
+  document.documentElement.style.background = 'transparent';
+}
+
+const scene = new THREE.Scene();
+if (!EMBED) {
+  scene.background = new THREE.Color(0x0a0a0d);
+  scene.fog = new THREE.Fog(0x0a0a0d, 16, 40);
+}
+
+const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 0.1, 200);
+if (EMBED) camera.position.set(5.8, 3.9, 9.6);
+else camera.position.set(6.2, 4.4, 10.8);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.target.set(0, 1.1, -1.2);
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 4;
+controls.maxDistance = 24;
+controls.maxPolarAngle = 1.45;
+controls.enableZoom = !EMBED;
+controls.enablePan = !EMBED;
+
+scene.add(new THREE.AmbientLight(0x3a3a4a, 0.5));
+const dir = new THREE.DirectionalLight(0x99aacc, 0.15);
+dir.position.set(6, 10, 4);
+scene.add(dir);
+
+if (!EMBED) {
+  const grid = new THREE.GridHelper(70, 70, 0x1b1b22, 0x141419);
+  grid.position.y = -0.115;
+  scene.add(grid);
+}
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+// pixel texture helpers
+function shade(hex, f) {
+  const n = parseInt(hex.slice(1), 16);
+  const c = v => Math.max(0, Math.min(255, Math.round(v * f)));
+  return `rgb(${c(n >> 16)},${c((n >> 8) & 255)},${c(n & 255)})`;
+}
+function noisyRect(ctx, x, y, w, h, hex, amt = 0.08) {
+  for (let i = 0; i < w; i++) for (let j = 0; j < h; j++) {
+    ctx.fillStyle = shade(hex, 1 + (Math.random() * 2 - 1) * amt);
+    ctx.fillRect(x + i, y + j, 1, 1);
+  }
+}
+function blockTex(draw, rx = 1, ry = 1) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 16;
+  draw(c.getContext('2d'));
+  const t = new THREE.CanvasTexture(c);
+  t.magFilter = t.minFilter = THREE.NearestFilter;
+  t.generateMipmaps = false;
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(rx, ry);
+  return t;
+}
+//NUMBERS FROM CLAUDE
+const stoneTile = (rx, ry, base, line) => blockTex(ctx => {
+  noisyRect(ctx, 0, 0, 16, 16, base, 0.06);
+  noisyRect(ctx, 0, 0, 16, 1, line, 0.04);
+  noisyRect(ctx, 0, 0, 1, 16, line, 0.04);
+}, rx, ry);
+const bandTex = (rx, ry, base, line) => blockTex(ctx => {
+  noisyRect(ctx, 0, 0, 16, 16, base, 0.05);
+  for (let y = 3; y < 16; y += 4) noisyRect(ctx, 0, y, 16, 1, line, 0.04);
+}, rx, ry);
+const plainTex = (rx, ry, base, amt = 0.07) => blockTex(ctx => noisyRect(ctx, 0, 0, 16, 16, base, amt), rx, ry);
+const plankTex = (rx, ry, base, seam) => blockTex(ctx => {
+  noisyRect(ctx, 0, 0, 16, 16, base, 0.06);
+  for (let y = 3; y < 16; y += 4) noisyRect(ctx, 0, y, 16, 1, seam, 0.03);
+  [[7, 0], [12, 4], [3, 8], [10, 12]].forEach(([x, y]) => noisyRect(ctx, x, y, 1, 4, seam, 0.03));
+}, rx, ry);
+const logTex = (rx, ry) => blockTex(ctx => {
+  noisyRect(ctx, 0, 0, 16, 16, '#5e4528', 0.05);
+  for (let x = 0; x < 16; x += 4) noisyRect(ctx, x, 0, 1, 16, '#46331d', 0.04);
+}, rx, ry);
+
+function lambert(tex) {
+  return new THREE.MeshLambertMaterial({ map: tex });
+}
+function box(group, w, h, d, mat, x, y, z) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.set(x, y, z);
+  m.castShadow = m.receiveShadow = true;
+  group.add(m);
+  return m;
+}
+
+// home room
+const home = new THREE.Group();
+scene.add(home);
+
+box(home, 10, 0.2, 10, lambert(plankTex(10, 10, '#7a5c36', '#5a4226')), 0, -0.1, 0);
+const oakWall = () => lambert(plankTex(8, 3, '#9c7c4c', '#77603a'));
+const walls = [];
+function wall(group, w, h, d, mat, x, y, z, side) {
+  const m = box(group, w, h, d, mat, x, y, z);
+  m.userData.side = side;
+  walls.push(m);
+  return m;
+}
+wall(home, 10.6, 3.2, 0.3, oakWall(), 0, 1.6, -5.15, 'back');
+wall(home, 0.3, 3.2, 10.6, oakWall(), -5.15, 1.6, 0, 'left');
+wall(home, 0.3, 3.2, 10.6, oakWall(), 5.15, 1.6, 0, 'right');
+const logMat = lambert(logTex(1, 3));
+[[-4.85, -4.85], [4.85, -4.85]].forEach(([x, z]) =>
+  box(home, 0.5, 3.2, 0.5, logMat, x, 1.6, z));
+
+// shared plank material (from minecraft)
+const planks = lambert(bandTex(1, 1, '#7a5230', '#5e3d22'));
+
+// minecraft red bed against the right wall (numbers from claude on position and size)
+const wool = c => lambert(plainTex(2, 2, c, 0.04));
+box(home, 2.5, 0.35, 4.2, planks, 3.55, 0.175, -1.2);
+box(home, 2.3, 0.25, 3.9, wool('#d8d8d2'), 3.55, 0.47, -1.2);
+box(home, 2.32, 0.45, 2.6, wool('#a03030'), 3.55, 0.825, -0.55);
+box(home, 1.5, 0.2, 0.7, wool('#e6e6e0'), 3.55, 0.7, -2.7);
+
+// nightstand + lamp at the head of the bed
+box(home, 0.9, 0.75, 0.9, planks, 1.75, 0.375, -2.9);
+box(home, 0.2, 0.1, 0.2, lambert(plainTex(1, 1, '#2c2c30')), 1.75, 0.8, -2.9);
+const bulb = new THREE.Mesh(
+  new THREE.SphereGeometry(0.27, 20, 16),
+  new THREE.MeshBasicMaterial({ color: 0xffe9b8 })
+);
+bulb.position.set(1.75, 1.12, -2.9);
+home.add(bulb);
+const LAMP_BASE = 1.9;
+const lampLight = new THREE.PointLight(0xffa050, LAMP_BASE, 10, 2);
+lampLight.position.set(1.75, 1.25, -2.9);
+lampLight.castShadow = true;
+lampLight.shadow.mapSize.set(1024, 1024);
+lampLight.shadow.bias = -0.004;
+home.add(lampLight);
+
+// tv on the left wall, facing the bed
+box(home, 0.12, 1.3, 2.4, lambert(plainTex(1, 1, '#0c0c0e', 0.03)), -4.93, 2.0, -1.2);
+const tvScreen = new THREE.Mesh(new THREE.PlaneGeometry(2.24, 1.14), new THREE.MeshBasicMaterial({ color: 0x05070c }));
+tvScreen.rotation.y = Math.PI / 2;
+tvScreen.position.set(-4.86, 2.0, -1.2);
+home.add(tvScreen);
+
+// office room
+const office = new THREE.Group();
+office.visible = false;
+scene.add(office);
+
+box(office, 10, 0.2, 10, lambert(stoneTile(10, 10, '#2c2c31', '#222226')), 0, -0.1, 0);
+const concrete = () => lambert(plainTex(8, 3, '#34343b', 0.05));
+wall(office, 10.6, 3.2, 0.3, concrete(), 0, 1.6, -5.15, 'back');
+wall(office, 0.3, 3.2, 10.6, concrete(), -5.15, 1.6, 0, 'left');
+wall(office, 0.3, 3.2, 10.6, concrete(), 5.15, 1.6, 0, 'right');
+
+// desk + monitor + keyboard
+const darkWood = lambert(bandTex(2, 1, '#5c4030', '#46301f'));
+box(office, 2.6, 0.12, 1.2, darkWood, 0, 1.5, -3.3);
+box(office, 0.12, 1.44, 1.1, darkWood, -1.24, 0.72, -3.3);
+box(office, 0.12, 1.44, 1.1, darkWood, 1.24, 0.72, -3.3);
+const matte = lambert(plainTex(1, 1, '#1a1a1e', 0.04));
+box(office, 0.5, 0.05, 0.3, matte, 0, 1.585, -3.6);
+box(office, 0.1, 0.35, 0.1, matte, 0, 1.78, -3.6);
+box(office, 1.5, 0.9, 0.06, matte, 0, 2.25, -3.55);
+const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.38, 0.78), new THREE.MeshBasicMaterial({ color: 0x101b33 }));
+screen.position.set(0, 2.25, -3.515);
+office.add(screen);
+box(office, 0.85, 0.05, 0.28, matte, 0, 1.585, -2.95);
+box(office, 0.14, 0.18, 0.14, lambert(plainTex(1, 1, '#7a3030')), 0.7, 1.65, -3.1);
+
+// office chair
+const fabric = lambert(plainTex(1, 1, '#222226', 0.05));
+box(office, 0.95, 0.14, 0.95, fabric, 0, 0.71, -1.9);
+box(office, 0.95, 1.05, 0.12, fabric, 0, 1.42, -1.43);
+box(office, 0.1, 0.64, 0.1, matte, 0, 0.32, -1.9);
+box(office, 0.8, 0.06, 0.12, matte, 0, 0.03, -1.9);
+box(office, 0.12, 0.06, 0.8, matte, 0, 0.03, -1.9);
+
+const monitorGlow = new THREE.PointLight(0x86a8ff, 1.0, 7, 2);
+monitorGlow.position.set(0, 2.3, -2.9);
+monitorGlow.castShadow = true;
+monitorGlow.shadow.mapSize.set(1024, 1024);
+monitorGlow.shadow.bias = -0.004;
+office.add(monitorGlow);
+
+// skin canvas — default steve, replaced by uploads
+const skinCanvas = document.createElement('canvas');
+skinCanvas.width = skinCanvas.height = 64;
+const sctx = skinCanvas.getContext('2d');
+
+function drawDefaultSkin() {
+  const n = (x, y, w, h, c, a) => noisyRect(sctx, x, y, w, h, c, a);
+  const HAIR = '#3b2a1c', SKIN = '#bd8e63', SHIRT = '#11a0a0', PANTS = '#3a3f9e', SHOE = '#5a5a5e';
+  // head: hair all around, face in front
+  n(0, 0, 32, 16, HAIR);
+  n(16, 0, 8, 8, SKIN);
+  n(8, 9, 8, 7, SKIN);
+  n(8, 9, 1, 1, HAIR, 0); n(15, 9, 1, 1, HAIR, 0);
+  sctx.fillStyle = '#ffffff'; sctx.fillRect(9, 12, 1, 1); sctx.fillRect(14, 12, 1, 1);
+  sctx.fillStyle = '#4a3f9e'; sctx.fillRect(10, 12, 1, 1); sctx.fillRect(13, 12, 1, 1);
+  n(11, 13, 2, 1, '#8a5a3a', 0);
+  n(11, 15, 2, 1, '#9c6a4a', 0);
+  // torso
+  n(16, 16, 24, 16, SHIRT);
+  // arms: sleeve then bare forearm, skin hands
+  n(40, 16, 16, 16, SHIRT);
+  n(40, 25, 16, 7, SKIN);
+  n(48, 16, 4, 4, SKIN);
+  n(32, 48, 16, 16, SHIRT);
+  n(32, 57, 16, 7, SKIN);
+  n(40, 48, 4, 4, SKIN);
+  // legs: pants, gray shoes
+  n(0, 16, 16, 16, PANTS);
+  n(0, 29, 16, 3, SHOE);
+  n(8, 16, 4, 4, SHOE);
+  n(16, 48, 16, 16, PANTS);
+  n(16, 61, 16, 3, SHOE);
+  n(24, 48, 4, 4, SHOE);
+}
+drawDefaultSkin();
+
+const skinTex = new THREE.CanvasTexture(skinCanvas);
+skinTex.magFilter = skinTex.minFilter = THREE.NearestFilter;
+skinTex.generateMipmaps = false;
+
+// mirror a region horizontally, for legacy 64x32 -> 64x64 conversion
+function copyFlip(sx, sy, w, h, dx, dy) {
+  sctx.save();
+  sctx.translate(dx + w, dy);
+  sctx.scale(-1, 1);
+  sctx.drawImage(skinCanvas, sx, sy, w, h, 0, 0, w, h);
+  sctx.restore();
+}
+function applySkin(img) {
+  sctx.clearRect(0, 0, 64, 64);
+  if (img.width === img.height * 2) {
+    sctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 32);
+    // left leg from right leg
+    copyFlip(4, 16, 4, 4, 20, 48); copyFlip(8, 16, 4, 4, 24, 48);
+    copyFlip(8, 20, 4, 12, 16, 52); copyFlip(4, 20, 4, 12, 20, 52);
+    copyFlip(0, 20, 4, 12, 24, 52); copyFlip(12, 20, 4, 12, 28, 52);
+    // left arm from right arm
+    copyFlip(44, 16, 4, 4, 36, 48); copyFlip(48, 16, 4, 4, 40, 48);
+    copyFlip(48, 20, 4, 12, 32, 52); copyFlip(44, 20, 4, 12, 36, 52);
+    copyFlip(40, 20, 4, 12, 40, 52); copyFlip(52, 20, 4, 12, 44, 52);
+  } else {
+    sctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 64, 64);
+  }
+  skinTex.needsUpdate = true;
+}
+// site default skin
+const defaultSkin = new Image();
+defaultSkin.onload = () => applySkin(defaultSkin);
+defaultSkin.src = 'minecraft_skin.png';
+
+// character — minecraft proportions in pixel units, parent scaled 0.1
+// rects are [x1,y1,x2,y2] on the 64x64 skin; bottoms pass y flipped
+function bodyPart(w, h, d, uv, mat) {
+  const g = new THREE.BoxGeometry(w, h, d);
+  const a = g.attributes.uv;
+  [uv.left, uv.right, uv.top, uv.bottom, uv.front, uv.back].forEach((r, f) => {
+    const u1 = r[0] / 64, v1 = 1 - r[1] / 64, u2 = r[2] / 64, v2 = 1 - r[3] / 64, k = f * 4;
+    a.setXY(k, u1, v1); a.setXY(k + 1, u2, v1);
+    a.setXY(k + 2, u1, v2); a.setXY(k + 3, u2, v2);
+  });
+  const m = new THREE.Mesh(g, mat);
+  m.castShadow = m.receiveShadow = true;
+  return m;
+}
+// side faces of a 4px-wide limb, rows ya..yb of its 12px height
+function limbUV(ox, oy, ya, yb) {
+  return {
+    right: [ox, oy + 4 + ya, ox + 4, oy + 4 + yb],
+    front: [ox + 4, oy + 4 + ya, ox + 8, oy + 4 + yb],
+    left: [ox + 8, oy + 4 + ya, ox + 12, oy + 4 + yb],
+    back: [ox + 12, oy + 4 + ya, ox + 16, oy + 4 + yb],
+    top: [ox + 4, oy, ox + 8, oy + 4],
+    bottom: [ox + 8, oy + 4, ox + 12, oy],
+  };
+}
+
+const skinMat = new THREE.MeshLambertMaterial({ map: skinTex, alphaTest: 0.05 });
+const hatMat = new THREE.MeshLambertMaterial({ map: skinTex, alphaTest: 0.5, side: THREE.DoubleSide });
+
+const character = new THREE.Group();
+character.scale.setScalar(0.1);
+scene.add(character);
+
+const torso = bodyPart(8, 12, 4, {
+  right: [16, 20, 20, 32], front: [20, 20, 28, 32], left: [28, 20, 32, 32],
+  back: [32, 20, 40, 32], top: [20, 16, 28, 20], bottom: [28, 20, 36, 16],
+}, skinMat);
+torso.position.y = 6;
+character.add(torso);
+
+const headGroup = new THREE.Group();
+headGroup.position.y = 12;
+const head = bodyPart(8, 8, 8, {
+  right: [0, 8, 8, 16], front: [8, 8, 16, 16], left: [16, 8, 24, 16],
+  back: [24, 8, 32, 16], top: [8, 0, 16, 8], bottom: [16, 8, 24, 0],
+}, skinMat);
+head.position.y = 4;
+const hat = bodyPart(9, 9, 9, {
+  right: [32, 8, 40, 16], front: [40, 8, 48, 16], left: [48, 8, 56, 16],
+  back: [56, 8, 64, 16], top: [40, 0, 48, 8], bottom: [48, 8, 56, 0],
+}, hatMat);
+hat.position.y = 4;
+headGroup.add(head, hat);
+character.add(headGroup);
+
+// facing +z, the character's right side is -x
+function makeArm(ox, oy, side) {
+  const g = new THREE.Group();
+  g.position.set(6 * side, 10, 0);
+  const mesh = bodyPart(4, 12, 4, limbUV(ox, oy, 0, 12), skinMat);
+  mesh.position.y = -4;
+  g.add(mesh);
+  g.rotation.z = 0.06 * side;
+  character.add(g);
+  return g;
+}
+const armR = makeArm(40, 16, -1);
+const armL = makeArm(32, 48, 1);
+
+// hip pivot, thigh rotated flat for sitting, shin hangs from the knee
+function makeLeg(ox, oy, side) {
+  const hip = new THREE.Group();
+  hip.position.set(2 * side, 0, 0);
+  hip.rotation.x = -Math.PI / 2;
+  const upper = bodyPart(4, 6, 4, Object.assign(limbUV(ox, oy, 0, 6), {
+    bottom: [ox + 4, oy + 10, ox + 8, oy + 14],
+  }), skinMat);
+  upper.position.y = -3;
+  hip.add(upper);
+  const knee = new THREE.Group();
+  knee.position.y = -6;
+  knee.rotation.x = Math.PI / 2;
+  const lower = bodyPart(4, 6, 4, Object.assign(limbUV(ox, oy, 6, 12), {
+    top: [ox + 4, oy + 6, ox + 8, oy + 10],
+    bottom: [ox + 8, oy + 20, ox + 12, oy + 16],
+  }), skinMat);
+  lower.position.y = -3;
+  knee.add(lower);
+  hip.add(knee);
+  character.add(hip);
+  return { hip, knee };
+}
+const legs = [makeLeg(0, 16, -1), makeLeg(16, 48, 1)];
+
+// scene switcher — home sleeps in the bed, office sits at the desk
+const spots = {
+  home: { pose: 'sleep', x: 3.55, y: 0.78, z: -1.1 },
+  office: { pose: 'sit', x: 0, seat: 0.78, z: -1.9, ry: Math.PI, arm: -1.05 },
+};
+function placeCharacter(name) {
+  const s = spots[name];
+  const sleep = s.pose === 'sleep';
+  character.rotation.set(sleep ? -Math.PI / 2 : 0, sleep ? 0 : s.ry, 0);
+  character.position.set(s.x, sleep ? s.y : s.seat + 0.2, s.z);
+  armR.rotation.x = armL.rotation.x = sleep ? 0 : s.arm;
+  legs.forEach(l => {
+    l.hip.rotation.x = sleep ? 0 : -Math.PI / 2;
+    l.knee.rotation.x = sleep ? 0 : Math.PI / 2;
+  });
+}
+placeCharacter('home');
+
+const fade = document.getElementById('fade');
+const status = document.getElementById('status');
+const buttons = document.querySelectorAll('#nav button');
+let current = 'home';
+let switching = false;
+
+function switchScene(name) {
+  if (name === current || switching) return;
+  switching = true;
+  fade.style.opacity = 1;
+  setTimeout(() => {
+    current = name;
+    home.visible = name === 'home';
+    office.visible = name === 'office';
+    placeCharacter(name);
+    status.textContent = 'currently at ' + name;
+    buttons.forEach(b => b.classList.toggle('active', b.dataset.scene === name));
+    fade.style.opacity = 0;
+    setTimeout(() => { switching = false; }, 300);
+  }, 320);
+}
+buttons.forEach(b => b.addEventListener('click', () => switchScene(b.dataset.scene)));
+
+// drive the scene from discord presence — offline sits at the office, otherwise home
+const LANYARD_ID = '417513482502799361';
+let lastStatus = null;
+async function syncPresence() {
+  try {
+    const res = await fetch('https://api.lanyard.rest/v1/users/' + LANYARD_ID);
+    if (!res.ok) return;
+    const json = await res.json();
+    if (!json.success || json.data.discord_status === lastStatus) return;
+    lastStatus = json.data.discord_status;
+    switchScene(lastStatus === 'offline' ? 'office' : 'home');
+  } catch {}
+}
+syncPresence();
+setInterval(() => { if (!document.hidden) syncPresence(); }, 30000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) syncPresence(); });
+
+// loop
+const clock = new THREE.Clock();
+// hide whichever wall sits between the camera and the room
+function updateWalls() {
+  const p = camera.position;
+  walls.forEach(w => {
+    w.visible =
+      w.userData.side === 'back' ? p.z > -4.8 :
+      w.userData.side === 'left' ? p.x > -4.8 : p.x < 4.8;
+  });
+}
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  headGroup.rotation.y = Math.sin(t * 0.6) * 0.08;
+  headGroup.position.y = 12 + Math.sin(t * 1.8) * 0.06;
+  lampLight.intensity = LAMP_BASE * (1 + Math.sin(t * 7.3) * 0.02 + Math.sin(t * 13.7) * 0.015);
+  updateWalls();
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

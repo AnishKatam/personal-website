@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function Stats() {
   const [loadMs, setLoadMs] = useState<number | null>(null);
   const [lcpMs, setLcpMs] = useState<number | null>(null);
+  const [views, setViews] = useState<number | null>(null);
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
@@ -47,7 +48,14 @@ export default function Stats() {
     };
   }, []);
 
-  if (loadMs === null && lcpMs === null) return null;
+  useEffect(() => {
+    fetch("/api/views", { cache: "no-store" })
+      .then((r) => r.json())
+      .then((d) => setViews(d.count))
+      .catch(() => {});
+  }, []);
+
+  if (loadMs === null && lcpMs === null && views === null) return null;
 
   const sec = (ms: number) => `${(ms / 1000).toFixed(2)}s`;
   const hidden = opacity <= 0.05;
@@ -67,6 +75,11 @@ export default function Stats() {
       {lcpMs !== null && (
         <p className="text-zinc-400">
           largest paint <span className="text-white">{sec(lcpMs)}</span>
+        </p>
+      )}
+      {views !== null && (
+        <p className="text-zinc-400">
+          website views <span className="text-white">{views.toLocaleString()}</span>
         </p>
       )}
     </div>

@@ -10,7 +10,6 @@ export default function BackgroundMusic() {
   
     audioRef.current = new Audio('/audio/music.opus');
     audioRef.current.loop = true;
-    audioRef.current.volume = 1; //100%
 
   
     const handleFirstInteraction = () => {
