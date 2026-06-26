@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import fallbackPfp from "../../assets/pfp.png";
 import idleArt from "../../assets/idle.png";
 
 //lanyard tracking id
@@ -157,15 +156,7 @@ export default function DiscordActivity() {
               height={40}
               className="h-10 w-10 rounded-full object-cover"
             />
-          ) : (
-            <Image
-              src={fallbackPfp}
-              alt="Discord avatar"
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full object-cover"
-            />
-          )}
+          ) : null}
           <span
             aria-hidden
             title={status.label}

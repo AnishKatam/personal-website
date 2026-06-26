@@ -10,6 +10,7 @@ import FloatingSkills, { SkillsCard } from "./components/SkillsGrid";
 import Stats from "./components/Stats";
 import ParticleNetwork from "./components/ParticleNetwork";
 import BackgroundMusic from "./components/BackgroundMusic";
+import RoomScene from "./components/RoomScene";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <Stats />
       <ParticleNetwork />
       <BackgroundMusic />
+      <RoomScene />
 
       <section id="home" className="relative z-10 min-h-screen flex items-center justify-center px-6 py-24">
         <div className="flex flex-col md:flex-row items-center gap-12 max-w-3xl w-full">
