@@ -18,7 +18,7 @@ const siteDescription =
 export const metadata: Metadata = {
   metadataBase: new URL("https://anishkatam.com"),
   title: {
-    default: "Anish Katam — Software Engineer",
+    default: "Anish Katam",
     template: "%s — Anish Katam",
   },
   description: siteDescription,
