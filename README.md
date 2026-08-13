@@ -8,8 +8,12 @@ Latency = Processing Time + Queuing Delay + Network Delay + Runetime Overhead
 
 # Update 2
 NEW FAVICONS
-minecraft themed 3D rendering (click for minecraft music)
+minecraft themed 3D rendering (click for minecraft music) 
 bug fixes and improvement/new viewer count metric connected to supabase
+
+# Update 3
+Website down :(
+-fix: prob Discord ping issue???
 
  ## Massive UX/UI Changes
 
