@@ -49,9 +49,12 @@ export default function Stats() {
   }, []);
 
   useEffect(() => {
+    //views stays null unless the api gives a number
     fetch("/api/views", { cache: "no-store" })
-      .then((r) => r.json())
-      .then((d) => setViews(d.count))
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (typeof d?.count === "number" && Number.isFinite(d.count)) setViews(d.count);
+      })
       .catch(() => {});
   }, []);
 
