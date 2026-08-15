@@ -13,7 +13,7 @@ Bug fixes and improvement/new viewer count metric connected to Supabase
 
 # Update 3
 Website down :(
-prob Discord ping issue???
+prob Discord ping issue???\
 8/15/26 fix: not null expected from Supabase view table, which causes a crash when Supabase is down
 
  ## Massive UX/UI Changes
