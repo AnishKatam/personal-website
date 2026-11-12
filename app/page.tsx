@@ -130,7 +130,7 @@ export default function Home() {
             <Reveal delay={0.05} className="w-full sm:w-[calc(50%-0.625rem)]">
               <ProjectCard
                 title="DandyHacks 2025"
-                desc="Led IT for the University of Rochester's 13th annual 42-hour hackathon — built and ran the event site that 200+ hackers relied on across 3 competition tracks."
+                desc="Led IT (now Director) for the University of Rochester's 14th annual 42-hour hackathon — built and designed the Dandyhacks website for the University of Rochester's biggest hackathon."
                 tags={["React", "Tailwind", "VanillaJS"]}
                 href="https://dandyhacks.net/"
               />
@@ -138,7 +138,7 @@ export default function Home() {
             <Reveal delay={0.12} className="w-full sm:w-[calc(50%-0.625rem)]">
               <ProjectCard
                 title="Poker Card Game"
-                desc="Multiplayer poker in Java with a live scoreboard and complete card artwork. The chip economy runs on a greedy algorithm I'm still weirdly proud of."
+                desc="Multiplayer poker in Java with a live scoreboard and complete card artwork. The chip denominations use a greedy algorithm."
                 tags={["Java", "JavaFX", "Algorithms"]}
                 href="https://github.com/AnishKatam/Poker"
               />
@@ -146,7 +146,7 @@ export default function Home() {
             <Reveal delay={0.19} className="w-full sm:w-[calc(50%-0.625rem)]">
               <ProjectCard
                 title="AI Schedule Builder"
-                desc="Scrapes University of Rochester course data and uses AI to turn it into personalized semester schedules, so students don't have to puzzle them together by hand."
+                desc="Scrapes University of Rochester course data and uses AI to turn it into personalized semester schedules, so students can have a more streamlined view of expected coursework."
                 tags={["Python", "AI", "Web Scraping"]}
                 href="https://github.com/AnishKatam/DandyHacks"
               />
